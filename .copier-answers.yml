@@ -1,0 +1,24 @@
+# Changes here will be overwritten by Copier
+_commit: 76e9b67
+_src_path: gh:browniebroke/pypackage-template
+add_me_as_contributor: true
+cli_name: ai-essay-grader
+copyright_year: '2025'
+documentation: true
+email: mamoreno@aldineisd.org
+full_name: Mark Moreno
+github_username: markm-io
+has_cli: true
+initial_commit: true
+is_django_package: false
+open_source_license: MIT
+package_name: ai_essay_grader
+project_name: AI Essay Grader
+project_short_description: This repository provides a modular framework for generating,
+    validating, merging, uploading, and fine-tuning OpenAI GPT-4o-mini models using
+    structured JSONL datasets.
+project_slug: ai-essay-grader
+run_uv_sync: true
+setup_github: false
+setup_pre_commit: true
+
