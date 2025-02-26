@@ -11,14 +11,14 @@ grader_app = typer.Typer()
 
 @grader_app.command()
 def main(
-    input_file: Path,
-    ai_model: str,
-    story_file: Path,
-    question_file: Path,
-    rubric_file: Path,
-    api_key: str,
-    output: Path,
-    scoring_format: str,
+    input_file: Path = typer.Option(..., help="Path to the input CSV file."),
+    ai_model: str = typer.Option(..., help="OpenAI model identifier."),
+    story_file: Path = typer.Option(..., help="Path to the story text file."),
+    question_file: Path = typer.Option(..., help="Path to the question text file."),
+    rubric_file: Path = typer.Option(..., help="Path to the rubric text file."),
+    api_key: str = typer.Option(..., help="OpenAI API key."),
+    output: Path = typer.Option(..., help="Path to the output CSV file."),
+    scoring_format: str = typer.Option("extended", help="Scoring format."),
 ) -> None:
     """
     CLI entry point for grading student responses.
@@ -34,17 +34,6 @@ def main(
         scoring_format (str): Format for score presentation (extended/short)
 
     """
-    input_file = typer.Option(..., help="Path to the input CSV file.") if input_file is None else input_file
-    ai_model = (typer.Option(..., help="OpenAI model identifier."),) if ai_model is None else ai_model
-    story_file = (typer.Option(..., help="Path to the story text file."),) if story_file is None else story_file
-    question_file = (
-        (typer.Option(..., help="Path to the question text file."),) if question_file is None else question_file
-    )
-    rubric_file = (typer.Option(..., help="Path to the rubric text file."),) if rubric_file is None else rubric_file
-    api_key = (typer.Option(..., help="OpenAI API key."),) if api_key is None else api_key
-    output = (typer.Option(..., help="Path to the output CSV file."),) if output is None else output
-    scoring_format = (typer.Option("extended", help="Scoring format."),) if scoring_format is None else scoring_format
-
     client = OpenAI(api_key=api_key)
     story_text = read_file(story_file)
     question_text = read_file(question_file)

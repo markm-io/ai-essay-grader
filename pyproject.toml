@@ -53,7 +53,6 @@ docs = [
 target-version = "py39"
 line-length = 120
 lint.select = [
-  "B",   # flake8-bugbear
   "D",   # flake8-docstrings
   "C4",  # flake8-comprehensions
   "S",   # flake8-bandit
