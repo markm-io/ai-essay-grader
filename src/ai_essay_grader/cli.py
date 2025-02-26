@@ -1,12 +1,11 @@
-import typer
-from rich import print
+"""Make the CLI runnable using python -m ai_essay_grader."""
 
-from .main import add
+from typer import Typer
 
-app = typer.Typer()
+from .student_evaluator.cli import grader_app
+from .trainer.cli import trainer_app
 
+app = Typer()
 
-@app.command()
-def main(n1: int, n2: int) -> None:
-    """Add the arguments and print the result."""
-    print(add(n1, n2))
+app.add_typer(grader_app, name="grader")
+app.add_typer(trainer_app, name="trainer")
