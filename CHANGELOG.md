@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.0 (2025-02-26)
+
+### Features
+
+- Update scoring format handling in cli and validation logic ([`dfe151a`](https://github.com/markm-io/ai-essay-grader/commit/dfe151aa44af07ed6c5223eb2a85a81d80b6477b))
+
 ## v0.3.0 (2025-02-26)
 
 ### Features
