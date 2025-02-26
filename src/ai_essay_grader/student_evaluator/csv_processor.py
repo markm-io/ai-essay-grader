@@ -29,7 +29,7 @@ def process_csv(
                 "language_conventions_feedback",
             ]
             if scoring_format == "extended"
-            else ["Score", "Feedback"]
+            else ["score", "feedback"]
         )
         fieldnames = [*base_fieldnames, *additional_fields]
 
