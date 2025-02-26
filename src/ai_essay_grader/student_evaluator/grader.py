@@ -19,6 +19,7 @@ def grade_responses(
     model_mapping = {
         "extended": "ft:gpt-4o-mini-2024-07-18:securehst::B4sRHMIY",
         "item-specific": "ft:gpt-4o-mini-2024-07-18:securehst::B4tsGjtf",
+        "short": "ft:gpt-4o-mini-2024-07-18:securehst::B5JmQ89X",
     }
     model = model_mapping.get(scoring_format, ai_model)
 
