@@ -1,23 +1,25 @@
 import os
+from typing import Optional
 
 from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-
-def upload_jsonl(jsonl_path: str) -> str:
+def upload_jsonl(jsonl_path: str, api_key: Optional[str] = None) -> str:
     """
     Upload JSONL file to OpenAI for fine-tuning.
 
     Args:
         jsonl_path: Path to the JSONL file to upload
+        api_key: OpenAI API key
 
     Returns:
         str: The file ID of the uploaded file
 
     """
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY") if api_key is None else api_key)
+
     try:
-        if not os.getenv("OPENAI_API_KEY"):
+        if api_key is None or not os.getenv("OPENAI_API_KEY"):
             print("❌ Error: OpenAI API key is missing.")
             exit(1)
 

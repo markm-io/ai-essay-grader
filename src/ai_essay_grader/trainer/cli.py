@@ -41,9 +41,12 @@ def merge(
 
 
 @trainer_app.command()
-def upload(file: str = typer.Option(..., help="Path to the JSONL file to upload")) -> None:
+def upload(
+    file: str = typer.Option(..., help="Path to the JSONL file to upload"),
+    api_key: Optional[str] = typer.Option(None, help="OpenAI API key"),
+) -> None:
     """Upload a validated JSONL file to OpenAI."""
-    file_id = upload_jsonl(file)
+    file_id = upload_jsonl(file, api_key)
     typer.echo(f"✅ JSONL file uploaded! File ID: {file_id}")
 
 
@@ -51,11 +54,12 @@ def upload(file: str = typer.Option(..., help="Path to the JSONL file to upload"
 def fine_tune(
     file: Optional[str] = typer.Option(None, help="Path to a validated JSONL file for uploading & fine-tuning"),
     file_id: Optional[str] = typer.Option(None, help="Existing file ID to use for fine-tuning"),
+    api_key: Optional[str] = typer.Option(None, help="OpenAI API key"),
 ) -> None:
     """Start a fine-tuning job using OpenAI."""
     if file:
         if validate_jsonl(file):
-            file_id = upload_jsonl(file)
+            file_id = upload_jsonl(file, api_key)
             create_fine_tuning_job(file_id)
     elif file_id:
         create_fine_tuning_job(file_id)

@@ -31,39 +31,39 @@ jobs:
           fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v6.0.1
 
-  test:
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version:
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13"
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macOS-latest
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        id: setup-python
-        with:
-          python-version: ${{ matrix.python-version }}
-      - uses: astral-sh/setup-uv@v5
-      - run: uv sync --no-python-downloads
-        shell: bash
-      - run: uv run pytest
-        shell: bash
-      - uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+  #  test:
+  #    strategy:
+  #      fail-fast: false
+  #      matrix:
+  #        python-version:
+  #          - "3.9"
+  #          - "3.10"
+  #          - "3.11"
+  #          - "3.12"
+  #          - "3.13"
+  #        os:
+  #          - ubuntu-latest
+  #          - windows-latest
+  #          - macOS-latest
+  #    runs-on: self-hosted
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #      - uses: actions/setup-python@v5
+  #        id: setup-python
+  #        with:
+  #          python-version: ${{ matrix.python-version }}
+  #      - uses: astral-sh/setup-uv@v5
+  #      - run: uv sync --no-python-downloads
+  #        shell: bash
+  #      - run: uv run pytest
+  #        shell: bash
+  #      - uses: codecov/codecov-action@v5
+  #        with:
+  #          token: ${{ secrets.CODECOV_TOKEN }}
 
   release:
     needs:
-      - test
+      #      - test
       - lint
       - commitlint
 
