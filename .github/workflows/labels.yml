@@ -18,13 +18,5 @@ jobs:
           python-version: 3.x
       - name: Install labels
         run: pip install labels
-      - name: Check Labels version
-        run: labels --version
-      - name: Upgrade Labels
-        run: pip install --upgrade labels
-      - name: Check Labels3
-        run: labels --help
-      - name: Check Labels version2
-        run: labels --version
       - name: Sync config with Github
         run: labels -u ${{ github.repository_owner }} -t ${{ secrets.GH_PAT }} sync -f .github/labels.toml
