@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.0 (2025-02-26)
+
+### Features
+
+- Enhance cli options with detailed help messages for grading parameters ([`81d42ed`](https://github.com/markm-io/ai-essay-grader/commit/81d42ed9463e9544d922bdd394bcf6e240f78890))
+
 ## v0.1.0 (2025-02-26)
 
 ### Features
