@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.3.0 (2025-02-26)
+
+### Features
+
+- Improve csv processing with progress bar and refactor file handling ([`2318ade`](https://github.com/markm-io/ai-essay-grader/commit/2318adefd8fce0348d47c9495e47884ab8624c32))
+
 ## v0.2.0 (2025-02-26)
 
 ### Features
