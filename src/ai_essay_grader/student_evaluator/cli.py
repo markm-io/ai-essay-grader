@@ -18,7 +18,7 @@ def main(
     rubric_file: Path = typer.Option(..., help="Path to the rubric text file."),
     api_key: str = typer.Option(..., help="OpenAI API key."),
     output: Path = typer.Option(..., help="Path to the output CSV file."),
-    scoring_format: str = typer.Option("extended", help="Scoring format."),
+    scoring_format: str = typer.Option(..., help="Scoring format."),
 ) -> None:
     """
     CLI entry point for grading student responses.
