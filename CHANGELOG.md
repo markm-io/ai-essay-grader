@@ -1,6 +1,17 @@
 # Changelog
 
+## v0.4.1 (2025-02-26)
+
+### Bug fixes
+
+- Standardize field names to lowercase in csv processor ([`29624b4`](https://github.com/markm-io/ai-essay-grader/commit/29624b476de734345ac76883fa98a6bbd4c77cc8))
+- Add new model mapping for 'short' scoring format in grader ([`9a28aff`](https://github.com/markm-io/ai-essay-grader/commit/9a28aff2283e5345c09b15d647b537e0140a2a05))
+
 ## v0.4.0 (2025-02-26)
+
+### Bug fixes
+
+- Make scoring format option mandatory in cli ([`5639c1c`](https://github.com/markm-io/ai-essay-grader/commit/5639c1c741629a1f667051c4ccdb5aafd0d9809f))
 
 ### Features
 
