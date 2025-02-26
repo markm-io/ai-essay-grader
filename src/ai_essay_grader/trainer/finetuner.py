@@ -4,7 +4,7 @@ from typing import Optional
 from openai import OpenAI
 
 
-def create_fine_tuning_job(file_id: str, model: str = "gpt-4o-mini-2024-07-18", api_key: Optional[str] = None) -> str:
+def create_fine_tuning_job(file_id: str, api_key: Optional[str] = None, model: str = "gpt-4o-mini-2024-07-18") -> str:
     """Creates a fine-tuning job with OpenAI using the uploaded JSONL file."""
     try:
         if api_key is None or not os.getenv("OPENAI_API_KEY"):

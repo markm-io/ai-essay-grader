@@ -14,19 +14,22 @@ def generate(
     rubric: str = typer.Option(..., help="Path to the rubric.txt file"),
     csv: str = typer.Option(..., help="Path to the model_testing.csv file"),
     output: str = typer.Option("fine_tuning.jsonl", help="Output JSONL file name"),
-    question_type: str = typer.Option(..., help="Output format: extended, item-specific, or short."),
+    scoring_format: str = typer.Option(..., help="Output format: extended, item-specific, or short."),
 ) -> None:
     """Generate JSONL file from input files."""
-    if question_type not in ["extended", "item-specific", "short"]:
+    if scoring_format not in ["extended", "item-specific", "short"]:
         raise typer.BadParameter("Format must be 'extended', 'item-specific', or 'short'")
-    jsonl_file = generate_jsonl(story, question, rubric, csv, output, question_type)
+    jsonl_file = generate_jsonl(story, question, rubric, csv, output, scoring_format)
     typer.echo(f"✅ JSONL file generated: {jsonl_file}")
 
 
 @trainer_app.command()
-def validate(file: str = typer.Option(..., help="Path to the JSONL file to validate")) -> None:
+def validate(
+    file: str = typer.Option(..., help="Path to the JSONL file to validate"),
+    scoring_format: str = typer.Option("extended", help="Scoring format: extended, item-specific, or short."),
+) -> None:
     """Validate a JSONL file."""
-    if validate_jsonl(file):
+    if validate_jsonl(file, scoring_format):
         typer.echo("✅ JSONL file is valid!")
 
 
@@ -55,13 +58,14 @@ def fine_tune(
     file: Optional[str] = typer.Option(None, help="Path to a validated JSONL file for uploading & fine-tuning"),
     file_id: Optional[str] = typer.Option(None, help="Existing file ID to use for fine-tuning"),
     api_key: Optional[str] = typer.Option(None, help="OpenAI API key"),
+    scoring_format: str = typer.Option("extended", help="Scoring format: extended, item-specific, or short."),
 ) -> None:
     """Start a fine-tuning job using OpenAI."""
     if file:
-        if validate_jsonl(file):
+        if validate_jsonl(file, scoring_format):
             file_id = upload_jsonl(file, api_key)
-            create_fine_tuning_job(file_id)
+            create_fine_tuning_job(file_id, api_key)
     elif file_id:
-        create_fine_tuning_job(file_id)
+        create_fine_tuning_job(file_id, api_key)
     else:
         typer.echo("❌ You must provide either --file or --file-id", err=True)

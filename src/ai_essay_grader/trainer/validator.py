@@ -1,12 +1,13 @@
 import json
 
 
-def validate_jsonl(jsonl_path: str) -> bool:
+def validate_jsonl(jsonl_path: str, scoring_format: str) -> bool:
     """
     Validate JSONL file format for OpenAI fine-tuning.
 
     Args:
         jsonl_path: Path to the JSONL file to validate
+        scoring_format: Scoring format for the JSONL file
 
     Returns:
         bool: True if file is valid, exits with code 1 otherwise
@@ -36,11 +37,16 @@ def validate_jsonl(jsonl_path: str) -> bool:
 
             if roles != expected_roles:
                 raise ValueError(f"Incorrect roles sequence in entry {i + 1}: {roles}")
+            if scoring_format == "extended":
+                required_fields = ["Idea Development Score", "Language Conventions Score"]
+            else:  # short or item-specific
+                required_fields = ["Score"]
 
             # Check assistant's response format
             assistant_msg = entry["messages"][-1]["content"]
-            if not all(key in assistant_msg for key in ["Idea Development Score", "Language Conventions Score"]):
-                raise ValueError(f"Missing expected labels in assistant response in entry {i + 1}")
+
+            if not all(key in assistant_msg for key in required_fields):
+                raise ValueError(f"Missing expected score fields for {scoring_format} format in assistant response")
 
         except json.JSONDecodeError:
             print(f"❌ Error: Invalid JSON format on line {i + 1}")
