@@ -19,8 +19,8 @@ def upload_jsonl(jsonl_path: str, api_key: Optional[str] = None) -> str:
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY") if api_key is None else api_key)
 
     try:
-        if api_key is None or not os.getenv("OPENAI_API_KEY"):
-            print("❌ Error: OpenAI API key is missing.")
+        if api_key is None and not os.getenv("OPENAI_API_KEY"):
+            print("❌ Error: OpenAI API key is missing. Oh No!!!")
             exit(1)
 
         with open(jsonl_path, "rb") as f:

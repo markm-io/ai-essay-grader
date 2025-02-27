@@ -7,7 +7,7 @@ from openai import OpenAI
 def create_fine_tuning_job(file_id: str, api_key: Optional[str] = None, model: str = "gpt-4o-mini-2024-07-18") -> str:
     """Creates a fine-tuning job with OpenAI using the uploaded JSONL file."""
     try:
-        if api_key is None or not os.getenv("OPENAI_API_KEY"):
+        if api_key is None and not os.getenv("OPENAI_API_KEY"):
             print("❌ Error: OpenAI API key is missing.")
             exit(1)
 
