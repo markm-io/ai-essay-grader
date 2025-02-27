@@ -5,8 +5,6 @@ from typing import Any
 import pandas as pd
 from pydantic import BaseModel, ValidationError
 
-# T = TypeVar("T", str, dict[str, str])
-
 
 # Define Pydantic model to ensure consistent response format
 class GradingResponse(BaseModel):
