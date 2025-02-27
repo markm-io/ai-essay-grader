@@ -1,5 +1,4 @@
 version = 1
-revision = 1
 requires-python = ">=3.9"
 resolution-markers = [
     "python_full_version >= '3.12'",
@@ -13,6 +12,7 @@ name = "ai-essay-grader"
 version = "0.5.0"
 source = { editable = "." }
 dependencies = [
+    { name = "aiocsv" },
     { name = "aiofiles" },
     { name = "openai" },
     { name = "pandas" },
@@ -35,6 +35,7 @@ docs = [
 
 [package.metadata]
 requires-dist = [
+    { name = "aiocsv", specifier = ">=1.3.2" },
     { name = "aiofiles", specifier = ">=24.1.0" },
     { name = "openai", specifier = ">=1.64.0" },
     { name = "pandas", specifier = ">=2.2.3" },
@@ -53,6 +54,42 @@ docs = [
     { name = "myst-parser", marker = "python_full_version >= '3.11'", specifier = ">=0.16" },
     { name = "sphinx", marker = "python_full_version >= '3.11'", specifier = ">=4" },
     { name = "sphinx-autobuild", marker = "python_full_version >= '3.11'", specifier = ">=2024,<2025" },
+]
+
+[[package]]
+name = "aiocsv"
+version = "1.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/33/78/bd4a85d195e57e72837415ef81d26ce6db6fdf185dce8d4f6a7c099ed4af/aiocsv-1.3.2.tar.gz", hash = "sha256:806d93465c7808d58d3ff0d2bba270fb4d04b934be6a1e95d0834c50a510910e", size = 24837 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5b/ac/f16d8ac8f340f84102294837cbf1ee8a30a211270f49f91ccc084f0bea93/aiocsv-1.3.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:f1996ac960c196aecc7d22e701c273a2676d13bf25575af78d4e515fc724ef20", size = 26421 },
+    { url = "https://files.pythonhosted.org/packages/7d/d5/616a3d7b07558ee1010cf233784bf1a6844b0664e92a489a380b887ff773/aiocsv-1.3.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bdd688dbc1723f2b3a433e42041ceb9c9a8fe70f547d35b2da4ea31e4c78efc5", size = 47958 },
+    { url = "https://files.pythonhosted.org/packages/66/1b/e03e1469ff228ac0a2c852d6fadfeebacd347f11f7aedd5818f7d42e0ba1/aiocsv-1.3.2-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:2f921828e386bb6945ed7d268e1524349ea506974ae35b9772542714f0ef3efd", size = 52246 },
+    { url = "https://files.pythonhosted.org/packages/eb/a2/a4413bdd3dee738e387ff0a98a4b9b3a7fc6dd8f55c456d832ae9ea0df3c/aiocsv-1.3.2-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:c17dba00ac5a0ba0a3962902ebd60ed529a59440c957343175e815947ac7f114", size = 47077 },
+    { url = "https://files.pythonhosted.org/packages/ac/69/d6da552b7fe5d2908c9bfbcc62c100cf19eaaf711a213cb9f84448569765/aiocsv-1.3.2-cp310-cp310-win_amd64.whl", hash = "sha256:198c905ec29897c347bf9b18eb410af13d7ac94a03d4b673e64eaa5f4557c913", size = 29080 },
+    { url = "https://files.pythonhosted.org/packages/d6/b3/548e5b377f65d3ae02c0674a54de76c150c8d050f4fe7b0e43be866ba1be/aiocsv-1.3.2-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:7c25ad8afbf79d28ec3320e608c7f38d3eff93e96ebbbd2430ae8fa0f6e7631b", size = 26420 },
+    { url = "https://files.pythonhosted.org/packages/0d/bc/2659b85488b520d66b31ac83f42f7493653f61a4941b4f0807f3f73bd3e0/aiocsv-1.3.2-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4004569bff39cb839a335b8f673a6496fd5b0b6e074c7adb7aee4a0c8379ea22", size = 49433 },
+    { url = "https://files.pythonhosted.org/packages/41/c2/0f7d38cf5411350b8448f7c5c77f65247224fa96edfc7a5e997deb5fc96d/aiocsv-1.3.2-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:e9c98f8d760add0b52274523baa4b81dde4a3c96f79222d3d4d6965bac9cdcbd", size = 54346 },
+    { url = "https://files.pythonhosted.org/packages/b1/73/d0a79681701a119c830104fa71bab7283a872a91bc2489d6631b8a93e15c/aiocsv-1.3.2-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:b3dce5e3b18e24b2e06d93cbd8186eac2e6a385cac40bbdfa09d6110a7f48d40", size = 48199 },
+    { url = "https://files.pythonhosted.org/packages/33/e6/5e661bc89cd094a7d92f5883c16f9651a52c4a8f38623c8de1851d7ffa84/aiocsv-1.3.2-cp311-cp311-win_amd64.whl", hash = "sha256:9edb342b0d7dba94d8976f46ba5814b8d8704d67a45e1b8a6579ab0ba04309e7", size = 29090 },
+    { url = "https://files.pythonhosted.org/packages/a6/ab/4c811d08dafb35832e799b7c8284426c037f136f7287b7fe32d5d932778a/aiocsv-1.3.2-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:5aa586564800df49280e0aa108acc855062ac5b9486bb052f0dd0c0051ea4f18", size = 26506 },
+    { url = "https://files.pythonhosted.org/packages/52/b5/48e8b825d8ec9ffbb47ebbc381702d5dfb59ef01ad00174bf43123b860cf/aiocsv-1.3.2-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:db943a463cb6828ba81bd7c083c6dd4c96edac4880b8638af81798d694405e26", size = 26497 },
+    { url = "https://files.pythonhosted.org/packages/94/6f/cb2d7b751a03433a30e7a645f0b3a126f5f2ecb0947c3da5a04496c06767/aiocsv-1.3.2-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:10780033a1ed3da825f2256449d177b7106b3c5a2d64bd683eab37f1fdee1e36", size = 51459 },
+    { url = "https://files.pythonhosted.org/packages/c2/19/67edf04b47168a2639d73ebaae25f2459d7284d10a5e7a2fef72a69bb31e/aiocsv-1.3.2-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:8c7aee34ceff4eaa654f01acbdba648297f5f9532dc7a23fac62defec28e0fe5", size = 55921 },
+    { url = "https://files.pythonhosted.org/packages/b8/e9/00fd06908ec1a0b2f2e6c6e10e6e8344dc2d6ca03c2a40b5241bdbd3b817/aiocsv-1.3.2-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:f848e1cca7d22d8bd6480fa4c7338dc8be2abdd02e0b99f677b8a7af27e15767", size = 50088 },
+    { url = "https://files.pythonhosted.org/packages/13/39/ee5645807a947736c87ab7c0dfcdbceb7d7f8d1d31cb7d52992cbd5d6d44/aiocsv-1.3.2-cp312-cp312-win_amd64.whl", hash = "sha256:59b0ea2d9e73539d4c1276467c4457acafa995717ea1b5340f3737f2cde2f71a", size = 29137 },
+    { url = "https://files.pythonhosted.org/packages/3e/0f/1826e1c0f561c831aa933d24918e51645b4b162abf1b5df4c37ef0ddc172/aiocsv-1.3.2-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:f4039dcf7bd684a98bf7c2218b8e7dc4abc951e1045dadd8813e992a1ba829ff", size = 26497 },
+    { url = "https://files.pythonhosted.org/packages/00/dc/d479b647af73a3b2126f9e364d669c9acb4e9b1f0e5006b8f74271820d40/aiocsv-1.3.2-cp313-cp313-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4d8612392b7da7bff545b69202fb03a8e09381fff2d5c4d9594246d7375cd603", size = 51261 },
+    { url = "https://files.pythonhosted.org/packages/75/68/aec1088dcc216c40b86122183fd28771e9a43f79a6866d1b912e8c282700/aiocsv-1.3.2-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:cee1577a381a44a18bcaed97c41f39b4400655de1a873f4e90b64af68e19dcd9", size = 50092 },
+    { url = "https://files.pythonhosted.org/packages/45/9a/18f65720081f2564f614fa872812508aa7e93651d3b3a0ca4eb42a744de1/aiocsv-1.3.2-cp313-cp313-win_amd64.whl", hash = "sha256:0f0437f34ab7d1da86b30407653d635cf7de330681e746859b8c54aaac2c4574", size = 29290 },
+    { url = "https://files.pythonhosted.org/packages/5d/48/9c943de5d9437ef66b3e79cc6f011fe4466c99b274ee9e227e734ac2a421/aiocsv-1.3.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:dfd2ef214b6d7944991f62ac593ad45bdaf0ed9f5741c8441ee7de148e512fe7", size = 26693 },
+    { url = "https://files.pythonhosted.org/packages/43/04/e6597b11c7e274a3f3f34db30702f33ec25b7513a23fa3bba8b3160aff2a/aiocsv-1.3.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9c3e5a817b3489283cc1fd80f8ba56431d552dc9ea4e539c0069d8d56bf0fba7", size = 49220 },
+    { url = "https://files.pythonhosted.org/packages/ce/68/8da12acd1af5b2f954be683fe24a998161c78f08f4b0ff788c1992ec3902/aiocsv-1.3.2-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:2ef14fa0839394ecc52274ea538b12b7b2e756eb0f514902a8fb391612161079", size = 53588 },
+    { url = "https://files.pythonhosted.org/packages/86/6d/08bd5eb36fd9e72de1aa3751d13fd8a621e2c337d1c62d5a36dc0fd1ca1b/aiocsv-1.3.2-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:188fc074ee8f72f1bab61c4838c36a354b15abd9c224285e7c60265c590fc87b", size = 48205 },
+    { url = "https://files.pythonhosted.org/packages/85/5d/7ab47f28fed4776be71048595ed6e4847bfc9286d737526fcf823e3c928f/aiocsv-1.3.2-cp39-cp39-win_amd64.whl", hash = "sha256:17341fa3b90414adda6cd8c79efc3c1a3f58a4dc72c2053c4532e82b61ef9f5e", size = 29221 },
 ]
 
 [[package]]
