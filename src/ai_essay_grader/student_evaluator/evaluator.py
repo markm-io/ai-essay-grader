@@ -59,8 +59,12 @@ async def evaluate_response_async(
         },
     ]
 
+    response_format = ExtendedResponseScore if scoring_format == "extended" else ResponseScore
+
     try:
-        response = await client.beta.chat.completions.parse(model=model, messages=messages, temperature=0)
+        response = await client.beta.chat.completions.parse(
+            model=model, messages=messages, temperature=0, response_format=response_format, stop=["###"]
+        )
 
         # Extract text from response
         response_text = response.choices[0].message.content.strip()
