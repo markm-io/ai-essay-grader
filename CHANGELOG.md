@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.5.0 (2025-02-27)
+
+### Features
+
+- Implement asynchronous csv processing and evaluation with openai api ([`521d9ad`](https://github.com/markm-io/ai-essay-grader/commit/521d9adb84bd7252c822e59c8e01a360032b8a4a))
+
 ## v0.4.1 (2025-02-26)
 
 ### Bug fixes
