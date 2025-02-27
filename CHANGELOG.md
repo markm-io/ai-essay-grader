@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.6.0 (2025-02-27)
+
+### Features
+
+- Implement pydantic model for grading response validation and enhance rubric loading ([`5e43ebc`](https://github.com/markm-io/ai-essay-grader/commit/5e43ebc6e994c2835cf6f7b15ef8d396152163bc))
+- Implement asynchronous csv writing using aiocsv in csv_processor.py ([`7a7ce0d`](https://github.com/markm-io/ai-essay-grader/commit/7a7ce0df7ca53eec3d5df964cce3409c3dffd6ab))
+
+### Bug fixes
+
+- Add response format handling in chat completion parsing ([`607933a`](https://github.com/markm-io/ai-essay-grader/commit/607933a227fb503ce51260c3b927dec3bcbdda86))
+- Update model mapping for 'short' scoring format in grader.py ([`dbce7ab`](https://github.com/markm-io/ai-essay-grader/commit/dbce7aba6f24e729f84a70d1a2ed96f2cf8330f3))
+- Add aiocsv dependency with version >=1.3.2 in project configuration ([`0aa4c47`](https://github.com/markm-io/ai-essay-grader/commit/0aa4c47cf8dccc8b1f0baac794f1e7ad2505863d))
+- Change default scoring format option to none in fine-tuning cli ([`bc8dcc7`](https://github.com/markm-io/ai-essay-grader/commit/bc8dcc7da8e930f9c7acda6c2a3d298b07031652))
+- Update api key validation logic to use 'and' condition ([`7750d13`](https://github.com/markm-io/ai-essay-grader/commit/7750d13fded347ef919228aa7225e4ffb301e74b))
+
 ## v0.5.0 (2025-02-27)
 
 ### Features
