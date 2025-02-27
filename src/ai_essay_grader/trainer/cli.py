@@ -58,7 +58,7 @@ def fine_tune(
     file: Optional[str] = typer.Option(None, help="Path to a validated JSONL file for uploading & fine-tuning"),
     file_id: Optional[str] = typer.Option(None, help="Existing file ID to use for fine-tuning"),
     api_key: Optional[str] = typer.Option(None, help="OpenAI API key"),
-    scoring_format: str = typer.Option("extended", help="Scoring format: extended, item-specific, or short."),
+    scoring_format: str = typer.Option(None, help="Scoring format: extended, item-specific, or short."),
 ) -> None:
     """Start a fine-tuning job using OpenAI."""
     if file:
