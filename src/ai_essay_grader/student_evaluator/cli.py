@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import typer
-from openai import OpenAI
 
 from .file_utils import read_file
 from .grader import grade_responses
@@ -34,7 +33,9 @@ def main(
         scoring_format (str): Format for score presentation (extended/short)
 
     """
-    client = OpenAI(api_key=api_key)
+    from openai import AsyncOpenAI
+
+    client = AsyncOpenAI(api_key=api_key)
     story_text = read_file(story_file)
     question_text = read_file(question_file)
     rubric_text = read_file(rubric_file)

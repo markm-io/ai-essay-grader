@@ -26,6 +26,7 @@ classifiers = [
 ]
 
 dependencies = [
+  "aiofiles>=24.1.0",
   "openai>=1.64.0",
   "pandas>=2.2.3",
   "rich>=10",
@@ -41,6 +42,7 @@ scripts.ai-essay-grader = "ai_essay_grader.cli:app"
 dev = [
   "pytest>=8,<9",
   "pytest-cov>=6,<7",
+  "types-aiofiles>=24.1.0.20241221",
 ]
 docs = [
   "furo>=2023.5.20; python_version>='3.11'",
