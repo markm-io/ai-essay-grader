@@ -2,7 +2,7 @@ from pathlib import Path
 
 import typer
 
-from .file_utils import read_file
+from .file_utils import load_rubric_files, read_file
 from .grader import grade_responses
 
 grader_app = typer.Typer()
@@ -14,7 +14,7 @@ def main(
     ai_model: str = typer.Option(..., help="OpenAI model identifier."),
     story_file: Path = typer.Option(..., help="Path to the story text file."),
     question_file: Path = typer.Option(..., help="Path to the question text file."),
-    rubric_file: Path = typer.Option(..., help="Path to the rubric text file."),
+    rubric_folder: Path = typer.Option(..., help="Path to the rubric folder."),
     api_key: str = typer.Option(..., help="OpenAI API key."),
     output: Path = typer.Option(..., help="Path to the output CSV file."),
     scoring_format: str = typer.Option(..., help="Scoring format."),
@@ -27,7 +27,7 @@ def main(
         ai_model (str): Identifier for the OpenAI model to be used
         story_file (Path): Text file containing the story or passage
         question_file (Path): Text file containing the questions
-        rubric_file (Path): Text file containing the grading rubric
+        rubric_folder (Path): Folder containing the grading rubric text files
         api_key (str): OpenAI API authentication key
         output (Path): Destination CSV file for graded responses
         scoring_format (str): Format for score presentation (extended/short)
@@ -38,7 +38,7 @@ def main(
     client = AsyncOpenAI(api_key=api_key)
     story_text = read_file(story_file)
     question_text = read_file(question_file)
-    rubric_text = read_file(rubric_file)
+    rubric_text = load_rubric_files(rubric_folder, scoring_format)
 
     if scoring_format not in ["extended", "item-specific", "short"]:
         raise typer.BadParameter("Format must be 'extended', 'item-specific', or 'short'")

@@ -1,5 +1,5 @@
 import json
-from typing import Union
+from typing import Any, Union
 
 import typer
 from openai import AsyncOpenAI, OpenAIError
@@ -11,7 +11,7 @@ async def evaluate_response_async(
     student_response: str,
     story_text: str,
     question_text: str,
-    rubric_text: str,
+    rubric_text: dict[str, Any],
     model: str,
     client: AsyncOpenAI,
     scoring_format: str,
@@ -40,23 +40,27 @@ async def evaluate_response_async(
     else:
         extended_system_content = "two keys: 'score' (an integer) and 'feedback' (a string)"
 
+    # Structured prompt to reduce token usage and dynamically insert rubric
+    user_prompt = {
+        "story": story_text,
+        "question": question_text,
+        "rubric": rubric_text,  # Use structured or flattened rubric
+        "student_response": student_response,
+    }
+
+    user_message = {"role": "user", "content": json.dumps(user_prompt, ensure_ascii=False)}
+
     messages = [
         {
             "role": "system",
             "content": (
-                f"You are an AI trained to evaluate student responses. "
+                f"AI Grader: Evaluate student responses based on rubric."
                 f"Your task is to assess the student's answer using the provided story, question, and rubric. "
                 f"Return your evaluation strictly as a JSON object with exactly {extended_system_content}. "
                 f"Do not include any additional text or commentary. Ensure that the JSON output is valid and parsable."
             ),
         },
-        {
-            "role": "user",
-            "content": f"Story:\n{story_text}\n\n"
-            f"Question:\n{question_text}\n\n"
-            f"Rubric:\n{rubric_text}\n\n"
-            f"Student Response:\n{student_response}",
-        },
+        user_message,
     ]
 
     response_format = ExtendedResponseScore if scoring_format == "extended" else ResponseScore

@@ -1,6 +1,7 @@
 from pathlib import Path
+from typing import Any
 
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 from .csv_processor import run_async_process_csv
 
@@ -10,16 +11,16 @@ def grade_responses(
     output_file: Path,
     story_text: str,
     question_text: str,
-    rubric_text: str,
+    rubric_text: dict[str, Any],
     ai_model: str,
-    client: OpenAI,
+    client: AsyncOpenAI,
     scoring_format: str,
 ) -> None:
     """Processes student responses and evaluates them using OpenAI."""
     model_mapping = {
         "extended": "ft:gpt-4o-mini-2024-07-18:securehst::B4sRHMIY",
         "item-specific": "ft:gpt-4o-mini-2024-07-18:securehst::B4tsGjtf",
-        "short": "ft:gpt-4o-mini-2024-07-18:securehst::B5ZuMjTn",
+        "short": "ft:gpt-4o-mini-2024-07-18:securehst::B5c3pEjL",
     }
     model = model_mapping.get(scoring_format, ai_model)
 
