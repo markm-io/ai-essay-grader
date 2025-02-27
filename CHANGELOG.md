@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.0 (2025-02-27)
+
+### Features
+
+- Update rubric handling to support loading from a folder and refactor related types ([`e0b115d`](https://github.com/markm-io/ai-essay-grader/commit/e0b115d8f6fd42624c184d6f66964dd24c6dd74c))
+
 ## v0.6.0 (2025-02-27)
 
 ### Features
