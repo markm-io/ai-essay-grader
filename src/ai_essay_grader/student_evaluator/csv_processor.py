@@ -7,6 +7,7 @@ from typing import Any
 
 import aiofiles  # type: ignore
 import typer
+from aiocsv import AsyncDictWriter  # new import for asynchronous CSV writing
 from openai import AsyncOpenAI
 
 from .evaluator import evaluate_response_async
@@ -79,14 +80,11 @@ async def process_csv(
         ]
         processed_rows = await asyncio.gather(*tasks)
 
+    # Use aiocsv's AsyncDictWriter to write the output CSV asynchronously
     async with aiofiles.open(output_file, mode="w", encoding="utf-8-sig", newline="") as outfile:
-        await outfile.write(",".join(fieldnames) + "\n")
-
-        for row in processed_rows:
-            await outfile.write(
-                ",".join(f'"{row[field]}"' if "," in str(row[field]) else str(row[field]) for field in fieldnames)
-                + "\n"
-            )
+        writer = AsyncDictWriter(outfile, fieldnames=fieldnames, quoting=csv.QUOTE_MINIMAL)
+        await writer.writeheader()
+        await writer.writerows(processed_rows)
 
     typer.echo(f"\nEvaluation completed. Results saved to {output_file}")
 
