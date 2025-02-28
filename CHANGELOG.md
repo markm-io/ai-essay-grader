@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.1 (2025-02-28)
+
+### Bug fixes
+
+- Update model mapping for item-specific scoring format in grader.py ([`1634502`](https://github.com/markm-io/ai-essay-grader/commit/16345023075b125af730762477203151e6639172))
+
 ## v0.7.0 (2025-02-27)
 
 ### Features
