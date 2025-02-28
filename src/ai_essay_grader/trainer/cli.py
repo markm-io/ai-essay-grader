@@ -9,7 +9,7 @@ trainer_app = typer.Typer(help="Generate, validate, merge, upload, and fine-tune
 
 @trainer_app.command()
 def generate(
-    story: str = typer.Option(..., help="Path to the story.txt file"),
+    story_folder: str = typer.Option(..., help="Path to the folder to the story.txt file"),
     question: str = typer.Option(..., help="Path to the question.txt file"),
     rubric: str = typer.Option(..., help="Path to the rubric.txt file"),
     csv: str = typer.Option(..., help="Path to the model_testing.csv file"),
@@ -19,7 +19,7 @@ def generate(
     """Generate JSONL file from input files."""
     if scoring_format not in ["extended", "item-specific", "short"]:
         raise typer.BadParameter("Format must be 'extended', 'item-specific', or 'short'")
-    jsonl_file = generate_jsonl(story, question, rubric, csv, output, scoring_format)
+    jsonl_file = generate_jsonl(story_folder, question, rubric, csv, output, scoring_format)
     typer.echo(f"✅ JSONL file generated: {jsonl_file}")
 
 

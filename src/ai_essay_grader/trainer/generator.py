@@ -6,39 +6,67 @@ import pandas as pd
 from pydantic import BaseModel, ValidationError
 
 
-# Define Pydantic model to ensure consistent response format
-class GradingResponse(BaseModel):
+class BaseGradingResponse(BaseModel):
+    """Base class for grading responses to enable dynamic response models."""
+
+    @classmethod
+    def create_model(cls, output_format: str) -> type:
+        """
+        Returns the appropriate Pydantic model based on the output format.
+
+        Args:
+            output_format (str): The format type (e.g., "item-specific", "short", "extended").
+
+        Returns:
+            Type[BaseModel]: A dynamically selected Pydantic model.
+
+        """
+        if output_format in ["item-specific", "short"]:
+            return type(
+                "GradingResponseBasic",
+                (BaseModel,),
+                {
+                    "__annotations__": {
+                        "Score": int,
+                        "Feedback": str,
+                    }
+                },
+            )
+
+        elif output_format == "extended":
+            return type(
+                "GradingResponseExtended",
+                (BaseModel,),
+                {
+                    "__annotations__": {
+                        "Idea_Development_Score": int,
+                        "Idea_Development_Feedback": str,
+                        "Language_Conventions_Score": int,
+                        "Language_Conventions_Feedback": str,
+                    }
+                },
+            )
+
+        else:
+            raise ValueError(f"❌ Error: Unsupported output format '{output_format}'.")
+
+
+def validate_response(response_content: str, output_format: str) -> BaseModel | None:
     """
-    Pydantic model representing the grading response format.
-
-    Attributes:
-        Score (int): The numerical score assigned to the student response
-        Feedback (str): Detailed feedback explaining the score
-
-    """
-
-    Score: int
-    Feedback: str
-
-
-def validate_response(response_content: str) -> GradingResponse | None:
-    """
-    Validates and parses a JSON response string into a GradingResponse model.
+    Validates and parses a JSON response string into the correct grading model.
 
     Args:
-        response_content (str): JSON string containing score and feedback data
+        response_content (str): JSON string containing grading response.
+        output_format (str): Determines which grading model to use.
 
     Returns:
-        GradingResponse | None: Validated response model if successful, None if validation fails
-
-    Raises:
-        ValidationError: If the response format doesn't match the GradingResponse model
-        JSONDecodeError: If the response string is not valid JSON
+        BaseModel | None: Validated response model if successful, None if validation fails.
 
     """
     try:
         response_dict = json.loads(response_content)
-        return GradingResponse(**response_dict)
+        GradingModel = BaseGradingResponse.create_model(output_format)
+        return GradingModel(**response_dict)
     except ValidationError as e:
         print(f"❌ Validation Error: {e.json()}")
         return None
@@ -115,8 +143,38 @@ def load_rubric_files(rubric_folder: str | Path, output_format: str) -> dict[str
     return rubric_dict
 
 
+def load_story_files(story_folder: str | Path) -> dict[str, str]:
+    """
+    Loads multiple story files from a folder and organizes them into a dictionary.
+
+    Returns:
+        dict: A dictionary mapping "Story 1", "Story 2", etc., to story content.
+
+    """
+    story_dict: dict[str, str] = {}
+
+    story_folder = Path(story_folder)
+
+    if not story_folder.exists() or not story_folder.is_dir():
+        print(f"❌ Error: Story folder '{story_folder}' not found or not a directory.")
+        exit(1)
+
+    story_files = sorted(story_folder.glob("*.txt"))  # Sort for consistent ordering
+
+    for idx, story_file in enumerate(story_files, start=1):
+        try:
+            with open(story_file, encoding="utf-8") as f:
+                story_text = f.read().strip()
+            story_dict[f"Story {idx}"] = story_text.replace("\u00a0", " ")  # Normalize spaces
+        except Exception as e:
+            print(f"❌ Error reading '{story_file}': {e}")
+            exit(1)
+
+    return story_dict
+
+
 def generate_jsonl(
-    story_path: str | Path,
+    story_folder: str | Path,
     question_path: str | Path,
     rubric_folder: str | Path,
     csv_path: str | Path,
@@ -124,18 +182,17 @@ def generate_jsonl(
     output_format: str,
 ) -> str | Path:
     """
-    Generates a JSONL file for fine-tuning based on input files and output format.
+    Generates a JSONL file for fine-tuning based on multiple stories, a question file, and a rubric.
 
-    Supported output_format values:
-      - "extended": Includes detailed scoring for idea and language.
-      - "item-specific" or "short": Returns "Score" and "Feedback" in a JSON string.
+    - Supports multiple stories by dynamically reading all `.txt` files from `story_folder`.
+    - Includes detailed scoring feedback or simplified feedback based on `output_format`.
 
     Returns:
         str: Path to the generated JSONL file.
 
     """
-    # Load text files with proper encoding
-    story_text = load_text_file(story_path)
+    # Load multiple stories dynamically
+    story_dict = load_story_files(story_folder)
     question_text = load_text_file(question_path)
     rubric_dict = load_rubric_files(rubric_folder, output_format)  # Load rubric dynamically
 
@@ -152,11 +209,11 @@ def generate_jsonl(
     for _, row in df.iterrows():
         system_message = {"role": "system", "content": "AI Grader: Evaluate student responses based on rubric."}
 
-        # Structured prompt to reduce token usage and dynamically insert rubric
+        # Structured prompt to handle multiple stories
         user_prompt = {
-            "story": story_text,
+            "stories": story_dict,  # Dictionary of multiple stories
             "question": question_text,
-            "rubric": rubric_dict,  # Use structured or flattened rubric
+            "rubric": rubric_dict,
             "student_response": row["Student Constructed Response"],
         }
 
@@ -179,8 +236,9 @@ def generate_jsonl(
             print(f"❌ Error: Invalid output format '{output_format}'.")
             exit(1)
 
-        # Validate the response using Pydantic
-        validated_response = validate_response(json.dumps(response_obj))
+        # Modify the assistant response validation in generate_jsonl()
+        validated_response = validate_response(json.dumps(response_obj), output_format)
+
         if not validated_response:
             print("⚠️ Skipping malformed response.")
             continue
