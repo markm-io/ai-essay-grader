@@ -19,7 +19,7 @@ def grade_responses(
     """Processes student responses and evaluates them using OpenAI."""
     model_mapping = {
         "extended": "ft:gpt-4o-mini-2024-07-18:securehst::B4sRHMIY",
-        "item-specific": "ft:gpt-4o-mini-2024-07-18:securehst::B4tsGjtf",
+        "item-specific": "ft:gpt-4o-mini-2024-07-18:securehst::B5c3pEjL",
         "short": "ft:gpt-4o-mini-2024-07-18:securehst::B5c3pEjL",
     }
     model = model_mapping.get(scoring_format, ai_model)
