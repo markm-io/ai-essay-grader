@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.9.0 (2025-03-03)
+
+### Features
+
+- Enhance grading feedback by incorporating grade level and language context in generator.py ([`1c810a7`](https://github.com/markm-io/ai-essay-grader/commit/1c810a79d9e9012115b795406c702259dbf084df))
+
+### Bug fixes
+
+- Correct required fields naming for extended scoring format in validator.py ([`3c3d317`](https://github.com/markm-io/ai-essay-grader/commit/3c3d31798a6809005a617251bec016bdcd400189))
+- Update model mapping for extended scoring format in grader.py ([`44dfc66`](https://github.com/markm-io/ai-essay-grader/commit/44dfc66f66012b15142c22ebf124feac97014109))
+
 ## v0.8.0 (2025-02-28)
 
 ### Features
