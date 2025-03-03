@@ -11,7 +11,7 @@ grader_app = typer.Typer()
 @grader_app.command()
 def main(
     input_file: Path = typer.Option(..., help="Path to the input CSV file."),
-    ai_model: str = typer.Option(..., help="OpenAI model identifier."),
+    ai_model: str = typer.Option(None, help="OpenAI model identifier."),
     story_folder: Path = typer.Option(..., help="Path to the story text file."),
     question_file: Path = typer.Option(..., help="Path to the question text file."),
     rubric_folder: Path = typer.Option(..., help="Path to the rubric folder."),
