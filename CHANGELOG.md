@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.12.0 (2025-03-03)
+
+### Features
+
+- Add tiktoken package and update dependencies in pyproject.toml and uv.lock ([`9ca15ca`](https://github.com/markm-io/ai-essay-grader/commit/9ca15ca945c8dd7c7cc18a649f542d6e800cfef1))
+
 ## v0.11.0 (2025-03-03)
 
 ### Features
