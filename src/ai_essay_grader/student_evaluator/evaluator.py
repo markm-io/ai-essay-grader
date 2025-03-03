@@ -9,7 +9,9 @@ from .models import ExtendedResponseScore, ResponseScore
 
 async def evaluate_response_async(
     student_response: str,
-    story_text: str,
+    grade_level: str,
+    tested_language: str,
+    story_dict: dict[str, Any],
     question_text: str,
     rubric_text: dict[str, Any],
     model: str,
@@ -21,7 +23,9 @@ async def evaluate_response_async(
 
     Args:
         student_response: The student's written response
-        story_text: The story text used in the question
+        grade_level: The grade level of the student
+        tested_language: The language being tested
+        story_dict: The story text used in the question
         question_text: The question prompt
         rubric_text: The grading rubric
         model: OpenAI model identifier
@@ -40,12 +44,31 @@ async def evaluate_response_async(
     else:
         extended_system_content = "two keys: 'score' (an integer) and 'feedback' (a string)"
 
+    # Extract additional context
+    tested_language = tested_language.strip().lower()  # Normalize language format
+
+    # Language settings (English or Spanish)
+    if tested_language == "spanish":
+        language_instruction = (
+            "El estudiante ha realizado la prueba en español. "
+            "Proporcione la retroalimentación y la evaluación en español."
+        )
+    else:
+        language_instruction = "The student has taken the test in English. Provide feedback and evaluation in English."
+
     # Structured prompt to reduce token usage and dynamically insert rubric
     user_prompt = {
-        "story": story_text,
+        "grade_level": f"Grade {grade_level}",
+        "language": tested_language.capitalize(),
+        "stories": story_dict,  # Dictionary of multiple stories
         "question": question_text,
         "rubric": rubric_text,  # Use structured or flattened rubric
         "student_response": student_response,
+        "evaluation_guidance": (
+            f"Analyze the student's response in a grade-appropriate manner. "
+            f"Ensure feedback aligns with expectations for Grade {grade_level}. "
+            f"{language_instruction}"
+        ),
     }
 
     user_message = {"role": "user", "content": json.dumps(user_prompt, ensure_ascii=False)}

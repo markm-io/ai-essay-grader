@@ -9,7 +9,7 @@ from .csv_processor import run_async_process_csv
 def grade_responses(
     input_file: Path,
     output_file: Path,
-    story_text: str,
+    story_dict: dict[str, Any],
     question_text: str,
     rubric_text: dict[str, Any],
     ai_model: str,
@@ -25,5 +25,5 @@ def grade_responses(
     model = model_mapping.get(scoring_format, ai_model)
 
     run_async_process_csv(
-        input_file, output_file, story_text, question_text, rubric_text, model, client, scoring_format
+        input_file, output_file, story_dict, question_text, rubric_text, model, client, scoring_format
     )

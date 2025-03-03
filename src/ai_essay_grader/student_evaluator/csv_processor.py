@@ -15,7 +15,7 @@ from .evaluator import evaluate_response_async
 
 async def process_row(
     row: dict[str, Any],
-    story_text: str,
+    story_dict: dict[str, Any],
     question_text: str,
     rubric_text: dict[str, Any],
     model: str,
@@ -26,7 +26,9 @@ async def process_row(
     """Asynchronously process a single row, update progress, and return the updated row."""
     response_data = await evaluate_response_async(
         row.get("Student Constructed Response", ""),
-        story_text,
+        row.get("Enrolled Grade Level", ""),
+        row.get("Tested Language", ""),
+        story_dict,
         question_text,
         rubric_text,
         model,
@@ -43,7 +45,7 @@ async def process_row(
 async def process_csv(
     input_file: Path,
     output_file: Path,
-    story_text: str,
+    story_dict: dict[str, Any],
     question_text: str,
     rubric_text: dict[str, Any],
     model: str,
@@ -75,7 +77,7 @@ async def process_csv(
 
     with typer.progressbar(length=total_rows, label="Processing responses") as progress:
         tasks: list[Awaitable[dict[str, Any]]] = [
-            process_row(row, story_text, question_text, rubric_text, model, client, scoring_format, progress)
+            process_row(row, story_dict, question_text, rubric_text, model, client, scoring_format, progress)
             for row in rows
         ]
         processed_rows = await asyncio.gather(*tasks)
@@ -92,7 +94,7 @@ async def process_csv(
 def run_async_process_csv(
     input_file: Path,
     output_file: Path,
-    story_text: str,
+    story_dict: dict[str, Any],
     question_text: str,
     rubric_text: dict[str, Any],
     model: str,
@@ -101,5 +103,5 @@ def run_async_process_csv(
 ) -> None:
     """Wrapper function to run the async function from a synchronous context."""
     asyncio.run(
-        process_csv(input_file, output_file, story_text, question_text, rubric_text, model, client, scoring_format)
+        process_csv(input_file, output_file, story_dict, question_text, rubric_text, model, client, scoring_format)
     )

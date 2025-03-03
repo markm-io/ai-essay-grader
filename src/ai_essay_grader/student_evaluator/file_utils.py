@@ -60,3 +60,33 @@ def load_rubric_files(rubric_folder: str | Path, scoring_format: str) -> dict[st
             exit(1)
 
     return rubric_dict
+
+
+def load_story_files(story_folder: str | Path) -> dict[str, str]:
+    """
+    Loads multiple story files from a folder and organizes them into a dictionary.
+
+    Returns:
+        dict: A dictionary mapping "Story 1", "Story 2", etc., to story content.
+
+    """
+    story_dict: dict[str, str] = {}
+
+    story_folder = Path(story_folder)
+
+    if not story_folder.exists() or not story_folder.is_dir():
+        print(f"❌ Error: Story folder '{story_folder}' not found or not a directory.")
+        exit(1)
+
+    story_files = sorted(story_folder.glob("*.txt"))  # Sort for consistent ordering
+
+    for idx, story_file in enumerate(story_files, start=1):
+        try:
+            with open(story_file, encoding="utf-8") as f:
+                story_text = f.read().strip()
+            story_dict[f"Story {idx}"] = story_text.replace("\u00a0", " ")  # Normalize spaces
+        except Exception as e:
+            print(f"❌ Error reading '{story_file}': {e}")
+            exit(1)
+
+    return story_dict
