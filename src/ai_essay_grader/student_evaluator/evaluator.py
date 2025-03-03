@@ -1,3 +1,4 @@
+import asyncio
 import json
 from typing import Any, Union
 
@@ -88,23 +89,33 @@ async def evaluate_response_async(
 
     response_format = ExtendedResponseScore if scoring_format == "extended" else ResponseScore
 
-    try:
-        response = await client.beta.chat.completions.parse(
-            model=model, messages=messages, temperature=0, response_format=response_format, stop=["###"]
-        )
-
-        # Extract text from response
-        response_text = response.choices[0].message.content.strip()
-
-        # Validate JSON format
+    for attempt in range(3):
         try:
-            parsed_response = json.loads(response_text)
-        except json.JSONDecodeError as e:
-            typer.echo(f"JSON parsing error: {e}\nRaw Response: {response_text}", err=True)
-            return None
+            response = await client.beta.chat.completions.parse(
+                model=model,
+                messages=messages,
+                temperature=0,
+                response_format=response_format,
+                stop=["###"],
+                max_completion_tokens=2000,
+            )
 
-        return parsed_response
+            # Extract text from response
+            response_text = response.choices[0].message.content.strip()
 
-    except (OpenAIError, json.JSONDecodeError) as e:
-        typer.echo(f"Error during API call or response parsing: {e}", err=True)
-        return None
+            # Validate JSON format
+            try:
+                parsed_response = json.loads(response_text)
+            except json.JSONDecodeError as e:
+                typer.echo(f"JSON parsing error: {e}\nRaw Response: {response_text}", err=True)
+                return None
+
+            return parsed_response
+
+        except (OpenAIError, json.JSONDecodeError) as e:
+            typer.echo(f"Error during API call or response parsing: {e}", err=True)
+            if attempt < 2:
+                typer.echo("Retrying...", err=True)
+                await asyncio.sleep(2)  # Wait for 2 seconds before retrying
+
+    return None
