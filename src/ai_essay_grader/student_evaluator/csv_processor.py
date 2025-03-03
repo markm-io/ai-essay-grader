@@ -101,7 +101,26 @@ def run_async_process_csv(
     client: AsyncOpenAI,
     scoring_format: str,
 ) -> None:
-    """Wrapper function to run the async function from a synchronous context."""
+    """
+
+        Wrapper function to run the async function from a synchronous context.
+
+    Args:
+        input_file: Path to the input CSV file
+        output_file: Path to the output CSV file
+        story_dict: Dictionary of story text
+        question_text: Question text
+        rubric_text: Dictionary of rubric text
+        model: OpenAI model identifier
+        client: OpenAI client instance
+        scoring_format: Format for score presentation
+
+    Returns:
+        Parsed response score object or None if an error occurs
+
+
+    """
+    print(f"Running process using {model} model")
     asyncio.run(
         process_csv(input_file, output_file, story_dict, question_text, rubric_text, model, client, scoring_format)
     )
