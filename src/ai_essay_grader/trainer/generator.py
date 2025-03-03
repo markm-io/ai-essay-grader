@@ -186,6 +186,8 @@ def generate_jsonl(
 
     - Supports multiple stories by dynamically reading all `.txt` files from `story_folder`.
     - Includes detailed scoring feedback or simplified feedback based on `output_format`.
+    - Considers **grade level** to ensure appropriate expectations for student responses.
+    - Adapts feedback to the **tested language** (English or Spanish).
 
     Returns:
         str: Path to the generated JSONL file.
@@ -209,12 +211,34 @@ def generate_jsonl(
     for _, row in df.iterrows():
         system_message = {"role": "system", "content": "AI Grader: Evaluate student responses based on rubric."}
 
-        # Structured prompt to handle multiple stories
+        # Extract additional context
+        grade_level = row["Enrolled Grade Level"]  # Ensure this exists in the CSV
+        tested_language = row["Tested Language"].strip().lower()  # Normalize language format
+
+        # Language settings (English or Spanish)
+        if tested_language == "spanish":
+            language_instruction = (
+                "El estudiante ha realizado la prueba en español. "
+                "Proporcione la retroalimentación y la evaluación en español."
+            )
+        else:
+            language_instruction = (
+                "The student has taken the test in English. Provide feedback and evaluation in English."
+            )
+
+        # Structured prompt with grade-level and language context
         user_prompt = {
+            "grade_level": f"Grade {grade_level}",
+            "language": tested_language.capitalize(),
             "stories": story_dict,  # Dictionary of multiple stories
             "question": question_text,
             "rubric": rubric_dict,
             "student_response": row["Student Constructed Response"],
+            "evaluation_guidance": (
+                f"Analyze the student's response in a grade-appropriate manner. "
+                f"Ensure feedback aligns with expectations for Grade {grade_level}. "
+                f"{language_instruction}"
+            ),
         }
 
         user_message = {"role": "user", "content": json.dumps(user_prompt, ensure_ascii=False)}
