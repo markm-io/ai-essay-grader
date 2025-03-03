@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.11.0 (2025-03-03)
+
+### Features
+
+- Updating branch to merge all changes ([`b63e21c`](https://github.com/markm-io/ai-essay-grader/commit/b63e21cec8ee286873a56c524c4b240f7243b42a))
+
 ## v0.10.0 (2025-03-03)
 
 ### Features
