@@ -38,7 +38,7 @@ def validate_jsonl(jsonl_path: str, scoring_format: str) -> bool:
             if roles != expected_roles:
                 raise ValueError(f"Incorrect roles sequence in entry {i + 1}: {roles}")
             if scoring_format == "extended":
-                required_fields = ["Idea Development Score", "Language Conventions Score"]
+                required_fields = ["Idea_Development_Score", "Language_Conventions_Score"]
             else:  # short or item-specific
                 required_fields = ["Score"]
 
