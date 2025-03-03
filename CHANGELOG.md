@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.0 (2025-03-03)
+
+### Features
+
+- Refactor story handling to support loading multiple stories from a folder ([`c258ab4`](https://github.com/markm-io/ai-essay-grader/commit/c258ab444b93e7a3fc3e32ce418dacf108eef24f))
+
 ## v0.9.0 (2025-03-03)
 
 ### Features
