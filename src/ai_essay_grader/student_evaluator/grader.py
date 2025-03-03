@@ -19,10 +19,13 @@ def grade_responses(
     """Processes student responses and evaluates them using OpenAI."""
     model_mapping = {
         "extended": "ft:gpt-4o-mini-2024-07-18:securehst::B6YDFKyO",
-        "item-specific": "ft:gpt-4o-mini-2024-07-18:securehst::B5c3pEjL",
+        "item-specific": "ft:gpt-4o-mini-2024-07-18:securehst::B72LJHWZ",
         "short": "ft:gpt-4o-mini-2024-07-18:securehst::B5c3pEjL",
     }
-    model = model_mapping.get(scoring_format, ai_model)
+    if ai_model:
+        model = ai_model
+    else:
+        model = model_mapping.get(scoring_format, ai_model)
 
     run_async_process_csv(
         input_file, output_file, story_dict, question_text, rubric_text, model, client, scoring_format
