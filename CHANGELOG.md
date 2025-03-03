@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.13.0 (2025-03-03)
+
+### Features
+
+- Implement rate limiting and token counting in evaluator for openai api calls ([`df11f37`](https://github.com/markm-io/ai-essay-grader/commit/df11f37fc945a0a875c9b8d5d1c87483f9918338))
+
 ## v0.12.0 (2025-03-03)
 
 ### Features
