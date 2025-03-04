@@ -20,7 +20,7 @@ def grade_responses(
     model_mapping = {
         "extended": "ft:gpt-4o-mini-2024-07-18:securehst::B6YDFKyO",
         "item-specific": "ft:gpt-4o-mini-2024-07-18:securehst::B72LJHWZ",
-        "short": "ft:gpt-4o-mini-2024-07-18:securehst::B5c3pEjL",
+        "short": "ft:gpt-4o-mini-2024-07-18:securehst::B79Kzt5H",
     }
     if ai_model:
         model = ai_model
