@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.13.1 (2025-03-04)
+
+### Bug fixes
+
+- Update ci configuration to fetch tags and use main branch for checkout ([`cee0088`](https://github.com/markm-io/ai-essay-grader/commit/cee008888b6d89fe3c0b3c8af120ec4aa0cbd19a))
+- Update model mapping for short ai model in grader.py ([`b02bb12`](https://github.com/markm-io/ai-essay-grader/commit/b02bb127f28cf5ccf62530a57a756e4bc2e09425))
+
 ## v0.13.0 (2025-03-03)
 
 ### Features
